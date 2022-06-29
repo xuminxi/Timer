@@ -20,6 +20,9 @@ class Timer(object):
         # 设置时钟
         self.set_clock()
 
+        #初始化
+        self.dif = 0
+
         # 设置数字秒表
         self.time_string = tk.StringVar()
         tk.Label(self.window, textvariable=self.time_string, font=("Times New Roman", 20), fg='red').place(x=130, y=210)
@@ -87,6 +90,7 @@ class Timer(object):
         self.start_flag = False
         self.window.after_cancel(self.timer)
         self.time_string.set('00:00:00')
+        self.dif = 0
         self.start_time = 0
         self.theta0, self.theta1 = -math.pi / 2, -math.pi / 2
 
@@ -101,14 +105,17 @@ class Timer(object):
             self.update()
 
     def stop(self):
-        #confirm if it is runing,if running, stop timer
-        if self.start_flag == True:
-            self.start_flag = False
-            self.stop_time = time.time()
-        #otherwise, start timer
+        if self.dif :
+            #confirm if it is runing,if running, stop timer
+            if self.start_flag == True:
+                self.start_flag = False
+                self.stop_time = time.time()
+            #otherwise, start timer
+            else:
+                self.start_flag = True
+                self.update()
         else:
-            self.start_flag = True
-            self.update()
+            pass
 
     def update(self):
         #confirm if it is required to be runnning,
